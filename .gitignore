@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Environment Variables
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+.virtual_documents/
+
+# VS Code
+.vscode/
+
+# Local Anaconda Files
+anaconda_projects/
+
+# Runtime Generated Files
+chroma_db/
+upload_db/
+
+# Virtual Environments
+venv/
+.venv/
+env/
+
+# Operating System Files
+.DS_Store
+Thumbs.db

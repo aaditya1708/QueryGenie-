@@ -1,0 +1,9 @@
+streamlit
+pandas
+chromadb
+langchain-core
+langchain-text-splitters
+sentence-transformers
+google-generativeai
+python-dotenv
+groq
