@@ -3,6 +3,7 @@ from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from sentence_transformers import SentenceTransformer
 import chromadb
+import uuid
 
 def load_schema(cursor):
     documents = []
@@ -54,14 +55,20 @@ def embed_chunks(chunks):
     embeddings = embeder.encode(chunks_text)
     return embeddings
 
-def store_embeddings(embeddings,chunks):
+def store_embeddings(embeddings, chunks):
     client = chromadb.PersistentClient(path="./chroma_db")
-    collection = client.get_or_create_collection(name = "schema_collection")
+    try:
+        client.delete_collection("schema_collection")
+    except:
+        pass
+    collection = client.get_or_create_collection(
+        name="schema_collection"
+    )
     collection.add(
-        ids = [str(i) for i in range(len(embeddings))],
-        embeddings= embeddings.tolist(),
-        documents = [chunk.page_content for chunk in chunks],
-        metadatas = [chunk.metadata for chunk in chunks]
+        ids=[str(uuid.uuid4()) for _ in range(len(embeddings))],
+        embeddings=embeddings.tolist(),
+        documents=[chunk.page_content for chunk in chunks],
+        metadatas=[chunk.metadata for chunk in chunks]
     )
     return collection
 
