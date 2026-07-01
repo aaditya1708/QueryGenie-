@@ -5,14 +5,11 @@ import tempfile
 from lib.ingestion_pipeline import ingestion_pipeline
 from lib.backend import backend_pipeline
 
-# ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="QueryGenie",
     page_icon="🧞",
     layout="wide"
 )
-
-# ── Global CSS ────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap');
@@ -277,8 +274,6 @@ h3 {
 </style>
 """, unsafe_allow_html=True)
 
-
-# ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("""
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:0.2rem">
@@ -294,10 +289,8 @@ with st.sidebar:
     </p>
     """, unsafe_allow_html=True)
 
-    # ── Workflow Steps ──
     st.markdown('<p class="sb-heading">How it works</p>', unsafe_allow_html=True)
 
-    # Determine active step
     db_uploaded   = "db_ready"   in st.session_state and st.session_state["db_ready"]
     query_done    = "query_done" in st.session_state and st.session_state["query_done"]
 
@@ -321,8 +314,6 @@ with st.sidebar:
         step_card(step3_class, "3", "Inspect Results",  "SQL + live data table"),
         unsafe_allow_html=True
     )
-
-    # ── Tips ──
     st.markdown('<p class="sb-heading">Tips</p>', unsafe_allow_html=True)
     tips = [
         ("💡", "Be specific with column names"),
@@ -333,13 +324,11 @@ with st.sidebar:
     for icon, tip in tips:
         st.markdown(f'<div class="sb-chip">{icon} {tip}</div>', unsafe_allow_html=True)
 
-    # ── Supported formats ──
     st.markdown('<p class="sb-heading">Supported Formats</p>', unsafe_allow_html=True)
     for fmt in [".db", ".sqlite", ".sqlite3"]:
         st.markdown(f'<div class="sb-chip">🗄️ {fmt}</div>', unsafe_allow_html=True)
 
 
-# ── Main Header ───────────────────────────────────────────────────────────────
 st.markdown("""
 <div class="qg-wordmark">
     <span style="font-size:1.8rem">🧞</span>
@@ -350,8 +339,6 @@ st.markdown("""
 
 st.markdown('<hr class="qg-divider">', unsafe_allow_html=True)
 
-
-# ── File Upload ───────────────────────────────────────────────────────────────
 st.markdown('<p class="qg-label">📁 Database</p>', unsafe_allow_html=True)
 
 uploaded_file = st.file_uploader(
@@ -360,8 +347,6 @@ uploaded_file = st.file_uploader(
     label_visibility="collapsed"
 )
 
-
-# ── Main Logic ────────────────────────────────────────────────────────────────
 if uploaded_file is not None:
 
     with tempfile.NamedTemporaryFile(delete=False, suffix=".db") as temp_db:
